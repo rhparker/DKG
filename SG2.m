@@ -2,7 +2,7 @@ clear all;
 format long;
 
 % number of sites;
-n=30;
+n=100;
 center=n/2;
 
 % initial coupling; typically at AC-limit eps=0; 
@@ -21,6 +21,19 @@ u1 = ones(1,n) * -pi;
 Loffset = 4;
 Roffset = 4;
 u1(n/2-Loffset:n/2+Roffset-1) = pi;
+
+% % unstable
+% u1(n/2-Loffset) = 0;
+% u1(n/2+Roffset-1) = 0;
+
+% % kink-kink
+% u1 = ones(1,n) * -pi;
+% Loffset = 4;
+% Roffset = 4;
+% u1(n/2-Loffset:end) = pi;
+% u1(n/2+Roffset:end) = 3*pi;
+
+
 
 % plot(u1, '.', 'MarkerSize',40);
 
@@ -55,7 +68,7 @@ x=linspace(1,n,n)-n/2;
 
 % paramaters for continuation
 delta_eps = 0.05;
-end_eps = 1.0;
+end_eps = 0.5;
 % threshold for Newton's Method
 threshold = 1e-08;
 

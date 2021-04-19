@@ -1,8 +1,9 @@
 %% 1p
 
-load intersited05;
+load data/intersited05;
+% load data/onsitekink05;
 
-x = [-n/2:n/2-1];
+x = [-n/2+1:n/2];
 
 figure('DefaultAxesFontSize',20);
 set(gca,'fontname','times');
@@ -10,8 +11,15 @@ set(groot,'defaultAxesTickLabelInterpreter','latex');
 set(groot,'defaulttextinterpreter','latex');
 set(groot,'defaultLegendInterpreter','latex');
 hold on;
+
+% use this for -pi to pi kink
 plot(x,uk,'ob','MarkerSize',10, 'LineWidth',1.5)
 plot(x,uk,'-b','LineWidth',1.5)
+
+% % use this for 0 to 2pi kink
+% plot(x,uk+pi,'ob','MarkerSize',10, 'LineWidth',1.5)
+% plot(x,uk+pi,'-b','LineWidth',1.5)
+
 xlabel('$n$', 'Interpreter','latex');
 ylabel('$u_n$', 'Interpreter','latex');
 
@@ -21,7 +29,7 @@ set(groot,'defaultAxesTickLabelInterpreter','latex');
 set(groot,'defaulttextinterpreter','latex');
 set(groot,'defaultLegendInterpreter','latex');
 plot(lambdak, '.','MarkerSize',30);
-axis( [-1e-10,1e-10,-1.6,1.6] );
+% axis( [-1e-10,1e-10,-1.6,1.6] );
 xlabel('Re $\lambda$', 'Interpreter','latex');
 ylabel('Im $\lambda$', 'Interpreter','latex');
 
@@ -47,9 +55,28 @@ plot(x,Vk(:,41),'-b','LineWidth',1.5)
 xlabel('$n$', 'Interpreter','latex');
 ylabel('$v_n$', 'Interpreter','latex');
 
-%% 2p
+%% kink for continuum SG
 
-load 2kink;
+load data/onsitekink05;
+x = linspace( -n/2, n/2-1, 1000);
+y = 2*pi-4*atan(exp(-x));
+
+figure('DefaultAxesFontSize',20);
+set(gca,'fontname','times');
+set(groot,'defaultAxesTickLabelInterpreter','latex');  
+set(groot,'defaulttextinterpreter','latex');
+set(groot,'defaultLegendInterpreter','latex');
+hold on;
+plot(x,y,'-b','LineWidth',3)
+xlabel('$x$', 'Interpreter','latex');
+ylabel('$u$', 'Interpreter','latex');
+
+
+
+%% 2p stable
+
+% load 2kink;
+load data/kk50;
 
 x = [-n/2:n/2-1];
 
@@ -64,6 +91,81 @@ plot(x,u1,'-b','LineWidth',1.5)
 xlabel('$n$', 'Interpreter','latex');
 ylabel('$u_n$', 'Interpreter','latex');
 % axis([-20,20,-4,4]);
+
+% spectrum 
+figure('DefaultAxesFontSize',20);
+set(gca,'fontname','times');
+set(groot,'defaultAxesTickLabelInterpreter','latex');  
+set(groot,'defaulttextinterpreter','latex');
+set(groot,'defaultLegendInterpreter','latex');
+plot(lambda, '.','MarkerSize',30);
+axis( [-1e-10,1e-10,-2,2] );
+xlabel('Re $\lambda$', 'Interpreter','latex');
+ylabel('Im $\lambda$', 'Interpreter','latex');
+ax1=gca;
+% inset
+ax2 = axes('Position',[.7 .7 .2 .2])
+box on;
+plot(lambda, '.','MarkerSize',30);
+axis( [-1, 1 ,0.57,0.573] );
+
+%% 2p unstable
+
+load data/kakunstable05;
+
+x = [-n/2+1:n/2];
+
+figure('DefaultAxesFontSize',20);
+set(gca,'fontname','times');
+set(groot,'defaultAxesTickLabelInterpreter','latex');  
+set(groot,'defaulttextinterpreter','latex');
+set(groot,'defaultLegendInterpreter','latex');
+hold on;
+plot(x,u1,'ob','MarkerSize',10, 'LineWidth',1.5)
+plot(x,u1,'-b','LineWidth',1.5)
+xlabel('$n$', 'Interpreter','latex');
+ylabel('$u_n$', 'Interpreter','latex');
+axis([-15,15,-4,4]);
+
+% spectrum 
+figure('DefaultAxesFontSize',20);
+set(gca,'fontname','times');
+set(groot,'defaultAxesTickLabelInterpreter','latex');  
+set(groot,'defaulttextinterpreter','latex');
+set(groot,'defaultLegendInterpreter','latex');
+plot(lambda, '.','MarkerSize',30);
+% axis( [-1e-10,1e-10,-2,2] );
+xlabel('Re $\lambda$', 'Interpreter','latex');
+ylabel('Im $\lambda$', 'Interpreter','latex');
+ax1=gca;
+% inset
+ax2 = axes('Position',[.2 .7 .2 .2])
+box on;
+plot(lambda, '.','MarkerSize',30);
+axis( [0.52975, 0.52985 ,-1,1] );
+
+% goldstone modes
+figure('DefaultAxesFontSize',20);
+hold on;
+plot(x,V(:,3),'ob','MarkerSize',12, 'LineWidth',1.5)
+plot(x,V(:,4),'.r','MarkerSize',30, 'LineWidth',1.5)
+plot(x,V(:,3),'-b','LineWidth',1.5);
+plot(x,V(:,4),'--r','LineWidth',1.5)
+xlabel('$n$', 'Interpreter','latex');
+ylabel('$v_n$', 'Interpreter','latex');
+legend({ '$\lambda = 0.529805$',  '$\lambda = 0.529796$'}, 'Interpreter','latex');
+axis([-15,15,-0.75,0.75]);
+
+
+% figure('DefaultAxesFontSize',20);
+% hold on;
+% plot(x,V(:,45),'ob','MarkerSize',10, 'LineWidth',1.5)
+% plot(x,V(:,47),'.r','MarkerSize',35, 'LineWidth',1.5)
+% plot(x,V(:,45),'-b','LineWidth',1.5);
+% plot(x,V(:,47),'--r','LineWidth',1.5)
+% xlabel('$n$', 'Interpreter','latex');
+% ylabel('$v_n$', 'Interpreter','latex');
+% legend({ '$\lambda = 0.9908i$',  '$\lambda = 0.9999i$'}, 'Interpreter','latex', 'location','northwest');
 
 %% 3p
 
@@ -106,7 +208,7 @@ ylabel('$d_0$', 'Interpreter','latex');
 
 %% kink-antikink
 
-load kak05_8;
+load data/kak05_8;
 x = [-n/2:n/2-1];
 
 figure('DefaultAxesFontSize',20);
